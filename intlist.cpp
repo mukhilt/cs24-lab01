@@ -7,14 +7,23 @@
 #include <iostream>
 using std::cout;
 
-// copy constructor
-IntList::IntList(const IntList& source) {
-    //IMPLEMENT THIS
+// default constructor sets up empty list
+IntList::IntList() {
+    head = nullptr;
+    tail = nullptr;
 }
+
 
 // destructor deletes all nodes
 IntList::~IntList() {
-    //IMPLEMENT THIS
+    Node* current = head;
+	while (current != nullptr){
+		Node* temp = current->next;
+		delete current;
+		current = temp;
+	}
+	head = nullptr;
+	tail = nullptr;
 }
 
 
@@ -131,13 +140,68 @@ int IntList::count() const {
 //Assignment operator should copy the list from the source
 //to this list, deleting/replacing any existing nodes
 IntList& IntList::operator=(const IntList& source){
-    //IMPLEMENT
-    return *this;
+	if(this == &source){
+    	return *this;
+	}
+	Node* current = head;
+    while(current != nullptr){
+		Node* temp = current->next;
+        delete current;
+        current = temp;
+	}
+	head = nullptr;
+	tail = nullptr;
+	if(source.head == nullptr){
+		return *this;
+	}
+	head = new Node();
+	head->info = source.head->info;
+	head->next = nullptr;
+
+	Node* this_current = head;
+	Node* source_current = source.head->next;
+
+
+	while(source_current != nullptr){
+		Node* newNode = new Node();
+		newNode->info = source_current->info;
+		newNode->next = nullptr;
+		this_current->next = newNode;
+
+		this_current = this_current->next;
+		source_current = source_current->next;
+	}
+	tail = this_current;
+	return *this;
+
 }
 
 // constructor sets up empty list
-IntList::IntList(){
+IntList::IntList(const IntList& source){
     head = nullptr;
+
+	if(source.head == nullptr){
+		return;
+	}
+	head = new Node();
+	head->info = source.head->info;
+	head->next = nullptr;
+
+	Node* this_current = head;
+	Node* source_current = source.head->next;
+
+	while(source_current != nullptr){
+
+		Node* new_node = new Node();
+		new_node->info = source_current -> info;
+		new_node->next = nullptr;
+
+    	this_current->next = new_node;
+    	this_current = new_node;
+    	source_current = source_current->next;
+	}
+
+	tail = this_current;
 }
 
 
