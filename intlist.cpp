@@ -5,6 +5,10 @@
 #include "intlist.h"
 
 #include <iostream>
+//Mukhil Thavathiru Murugan
+//Perm: A303P09
+//NetID: mukhil
+//Section: Thursday 3-3:50
 using std::cout;
 
 // default constructor sets up empty list
